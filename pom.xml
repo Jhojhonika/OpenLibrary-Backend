@@ -60,11 +60,8 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>3.9.9</version> <!-- Add compiler plugin -->
-				<configuration>
-					<source>17</source>
-					<target>17</target>
-				</configuration>
+				 <!-- Add compiler plugin -->
+
 			</plugin>
 		</plugins>
 	</build>
