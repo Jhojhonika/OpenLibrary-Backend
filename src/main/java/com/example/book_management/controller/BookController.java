@@ -39,7 +39,7 @@ public class BookController {
 
 
     // Get all books or filter by id, author, title, and genre
-    @GetMapping
+    @GetMapping("/api/books")
     public ResponseEntity<Object> getBooksByFilters(
             @RequestParam(required = false) String id,
             @RequestParam(required = false) String author,
@@ -60,7 +60,7 @@ public class BookController {
 
 
     // Add a new book
-    @PostMapping
+    @PostMapping("/api/books")
     public ResponseEntity<String> addBook(@RequestBody Book book) {
         try {
             // Generate a unique ID for the book if not already present
