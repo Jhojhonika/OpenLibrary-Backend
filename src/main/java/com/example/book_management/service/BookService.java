@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,25 +38,54 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+//    public List<Book> getBooksByFilters(String id, String author, String title, String genre) {
+//        System.out.println("Filters received - ID: " + id + ", Author: " + author + ", Title: " + title + ", Genre: " + genre);
+//
+//        List<Book> books;
+//        if (id != null && !id.isEmpty()) {
+//            return bookRepository.findById(id).map(List::of).orElse(List.of());
+//        } else if (author != null && !author.isEmpty() &&
+//                title != null && !title.isEmpty() &&
+//                genre != null && !genre.isEmpty()) {
+//            return bookRepository.findByAuthorContainingIgnoreCaseAndTitleContainingIgnoreCaseAndGenreContainingIgnoreCase(author, title, genre);
+//        } else if (author != null && !author.isEmpty()) {
+//            return bookRepository.findByAuthorContainingIgnoreCase(author);
+//        } else if (title != null && !title.isEmpty()) {
+//            return bookRepository.findByTitleContainingIgnoreCase(title);
+//        } else if (genre != null && !genre.isEmpty()) {
+//            return bookRepository.findByGenreContainingIgnoreCase(genre);
+//        } else {
+//            return bookRepository.findAll();
+//        }
+//    }
+
+    // Filter books by ID, author, title, or genre
     public List<Book> getBooksByFilters(String id, String author, String title, String genre) {
+        List<Book> books;
+
         if (id != null && !id.isEmpty()) {
-            return bookRepository.findById(id).map(List::of).orElse(List.of());
+            books = bookRepository.findById(id).map(List::of).orElse(List.of());
         } else if (author != null && !author.isEmpty() &&
                 title != null && !title.isEmpty() &&
                 genre != null && !genre.isEmpty()) {
-            return bookRepository.findByAuthorContainingIgnoreCaseAndTitleContainingIgnoreCaseAndGenreContainingIgnoreCase(author, title, genre);
+            books = bookRepository.findByAuthorContainingIgnoreCaseAndTitleContainingIgnoreCaseAndGenreContainingIgnoreCase(author, title, genre);
         } else if (author != null && !author.isEmpty()) {
-            return bookRepository.findByAuthorContainingIgnoreCase(author);
+            books = bookRepository.findByAuthorContainingIgnoreCase(author);
         } else if (title != null && !title.isEmpty()) {
-            return bookRepository.findByTitleContainingIgnoreCase(title);
+            books = bookRepository.findByTitleContainingIgnoreCase(title);
         } else if (genre != null && !genre.isEmpty()) {
-            return bookRepository.findByGenreContainingIgnoreCase(genre);
+            books = bookRepository.findByGenreContainingIgnoreCase(genre);
         } else {
-            return bookRepository.findAll();
+            books = bookRepository.findAll();
         }
+
+        // Check if the books list is empty and return an empty list if true
+        if (books.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return books;
     }
-
-
 
 
 

@@ -18,7 +18,7 @@ public interface BookRepository extends MongoRepository<Book, String> {
 
 
 
-Page<Book> findAll(Pageable pageable);
+
 
 
 }

@@ -39,7 +39,7 @@ public class BookController {
 
 
     // Get all books or filter by id, author, title, and genre
-    @GetMapping("/api/books")
+    @GetMapping
     public ResponseEntity<Object> getBooksByFilters(
             @RequestParam(required = false) String id,
             @RequestParam(required = false) String author,
@@ -57,10 +57,18 @@ public class BookController {
         }
     }
 
+    @ControllerAdvice
+    public class GlobalExceptionHandler {
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleException(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("An error occurred: " + e.getMessage());
+        }
+    }
 
 
     // Add a new book
-    @PostMapping("/api/books")
+    @PostMapping
     public ResponseEntity<String> addBook(@RequestBody Book book) {
         try {
             // Generate a unique ID for the book if not already present
@@ -107,7 +115,7 @@ public class BookController {
 
     // Serve image by genre and filename
     @CrossOrigin(origins = "http://openlibraryofbooks.netlify.app")
-    @GetMapping("/api/books/images/{genre}/{filename}")
+    @GetMapping("/images/{genre}/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String genre, @PathVariable String filename) {
         try {
             // Define the path to the image
@@ -141,7 +149,7 @@ public class BookController {
 
 
     // Delete a book by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/books/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable String id) {
         bookService.deleteBookById(id);
         return ResponseEntity.ok("Book deleted successfully");
