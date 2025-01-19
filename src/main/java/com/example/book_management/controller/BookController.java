@@ -25,7 +25,7 @@ import java.util.Optional;
 import org.springframework.validation.annotation.Validated;
 @RestController
 @RequestMapping("/api/books")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://openlibraryofbooks.netlify.app")
 @Validated
 public class BookController {
     @Autowired
@@ -106,7 +106,7 @@ public class BookController {
     }
 
     // Serve image by genre and filename
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://openlibraryofbooks.netlify.app")
     @GetMapping("/api/books/images/{genre}/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String genre, @PathVariable String filename) {
         try {
